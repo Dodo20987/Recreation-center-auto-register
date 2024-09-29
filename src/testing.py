@@ -1,4 +1,5 @@
 import main
+import datetime
 
 def test_press_register():
     for i in range(0, 50):
@@ -15,4 +16,7 @@ def test_info_input():
 
 if __name__ == "__main__":
     #test_press_register()
-    test_info_input()
+#    test_info_input()
+    # Get the current day of the week
+    current_day = datetime.datetime.now().strftime("%A")
+    print(current_day)
