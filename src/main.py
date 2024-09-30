@@ -67,18 +67,20 @@ def get_day():
 
 def handle_registration(LINK):
     e1 = registerEvent(LINK)
-    while True:
-        if e1.click_register():
-            e1.login_page()
-            e1.choose_user()
-            e1.choose_payment_option()
-            #if WAITLIST:
-            #    e1.completeRegister()
-            e1.place_order()
-            #e1.completeRegister()
-        else:
-            print("Can't register yet")
-            time.sleep(5)
+    if not e1.click_register():
+        raise RuntimeError("could not click register or waitlist button")
+    if not e1.login_page():
+        raise RuntimeError("could not log the user in")
+    if not e1.choose_user():
+        raise RuntimeError("could not select desired user")
+    if not e1.choose_payment_option():
+        raise RuntimeError("could not choose the membership option for payment")
+    if WAITLIST:
+        e1.completeRegister()
+
+    if not e1.place_order():
+        raise RuntimeError("could not complete the checkout")
+    e1.completeRegister()
 
 class modifyDate:
     def __init__(self, date_string):
@@ -141,7 +143,7 @@ class registerEvent:
         self.driver = webdriver.Firefox(options=options)
         self.driver.get(link)
         
-    def click_register(self):
+    def click_register(self) -> bool:
         print("click register")
         try:
             content_body = WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.XPATH, "/html/body/div[3]")))
@@ -172,7 +174,7 @@ class registerEvent:
             self.driver.close()
         return False
 
-    def login_page(self):
+    def login_page(self) -> bool:
         try:
             login_button = WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="loginradius-validate-login"]')))
             password_input = WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="loginradius-login-password"]')))
@@ -192,7 +194,7 @@ class registerEvent:
             print("error: ", e)
             self.driver.close()
             return False
-    def choose_user(self):
+    def choose_user(self) -> bool:
         print("choose user")
         try:
             user_radio = WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.XPATH, '//*[@id="ParticipantsFamily_FamilyMembers_0__IsParticipating"]')))
@@ -212,7 +214,7 @@ class registerEvent:
             print("error: ", e)
             self.driver.close()
             return False
-    def choose_payment_option(self):
+    def choose_payment_option(self) -> bool:
         try:
             membership_option = WebDriverWait(self.driver,10).until(EC.presence_of_element_located((By.XPATH, '/html/body/div[2]/div[2]/div/div/div/div[4]/div[1]/div/ul/li[1]/div/table/tbody/tr[2]')))
             radio_button = WebDriverWait(membership_option,10).until(EC.presence_of_element_located((By.CLASS_NAME, 'holiday-radio-btn')))
@@ -232,7 +234,7 @@ class registerEvent:
             self.driver.close()
             return False
 
-    def place_order(self):
+    def place_order(self) -> bool:
         try:
             
             time.sleep(random.randint(3,6))
@@ -280,7 +282,10 @@ if __name__ == "__main__":
             registration_link = res.fetchone()[0]
             print(registration_link)
             
-            #handle_registration(registration_link) 
+            try:
+                handle_registration(registration_link) 
+            except Exception as e:
+                print("registration unsucessful")
             #new_link = handle_link_mod(registration_link)
 
             #u_str = f"UPDATE links SET link = '{new_link}' WHERE registerday = '{curr_day}'"
