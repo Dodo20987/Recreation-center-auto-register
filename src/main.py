@@ -21,6 +21,7 @@ temp = ""
 EMAIL = os.getenv("EMAIL")
 PASSWORD = os.getenv("PASSWORD")
 PATH_TO_DB = os.getenv("PATH_TO_DB")
+TEXT_FILE_PATH = os.getenv("TEXT_FILE_PATH")
 options = webdriver.FirefoxOptions()
 options.add_argument("start-maximized")
 con = None
@@ -40,7 +41,7 @@ def handle_link_mod(LINK):
 def connect_to_db():
     try:
         con = sqlite3.connect(PATH_TO_DB) 
-        cur = con.cursor()
+        
         return True
     except Exception as e:
         print("error: ", e)
@@ -152,10 +153,10 @@ class registerEvent:
             content_body = WebDriverWait(content_body,10).until(EC.presence_of_element_located((By.CSS_SELECTOR, ".bm-booking-info")))
 
             registerButton = WebDriverWait(content_body,10).until(EC.element_to_be_clickable((By.ID, "bookEventButton")))
-            textContent = registerButton.get_attribute("innerHMTL")
-            if textContent == "Waitlist":
+            textContent = registerButton.text
+            if textContent == "WAITLIST":
                 WAITLIST = True
-            elif textContent == "Register":
+            elif textContent == "REGISTER":
                 WAITLIST = False
             else:
                 self.driver.close()
@@ -164,7 +165,6 @@ class registerEvent:
             if registerButton.is_displayed() and registerButton.is_enabled():
 
                 self.driver.execute_script("document.getElementById('temp_wrapper').style.display = 'none';")
-                # Now try to click the button
                 registerButton.click() 
             else:
                 raise RuntimeError("button is not clickable")
@@ -275,23 +275,23 @@ class registerEvent:
 
 if __name__ == "__main__":
     def main():
-        if(connect_to_db()):
-            curr_day = get_day().upper()
-            q_str = f"SELECT link FROM links WHERE registerDay = '{curr_day}'"
-            res = cur.execute(q_str)
-            registration_link = res.fetchone()[0]
-            print(registration_link)
-            
-            try:
-                handle_registration(registration_link) 
-            except Exception as e:
-                print("registration unsucessful")
-            #new_link = handle_link_mod(registration_link)
-
-            #u_str = f"UPDATE links SET link = '{new_link}' WHERE registerday = '{curr_day}'"
-            #cur.execute(u_str)
-            #con.commit()
-            con.close()
-        else:
-            print("failed to connect to database")
+        con = sqlite3.connect(PATH_TO_DB)
+        cur = con.cursor()
+        curr_day = get_day().upper()
+        q_str = f"SELECT link FROM links WHERE registerDay = '{curr_day}'"
+        res = cur.execute(q_str)
+        registration_link = res.fetchone()[0]
+        print(registration_link)
+        try:
+            handle_registration(registration_link)
+        except Exception as e:
+            print("registration unsucessful")
+        new_link = handle_link_mod(registration_link)
+        u_str = f"UPDATE links SET link = '{new_link}' WHERE registerday = '{curr_day}'"
+        cur.execute(u_str)
+        con.commit()
+        con.close()
+        file = open(TEXT_FILE_PATH, 'a')
+        file.write(f'{datetime.datetime.now()}' + ' - The script ran \n')
+        file.close()
     main()
