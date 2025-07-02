@@ -1,0 +1,47 @@
+2024-10-03 14:01:01.123906 - The script ran 
+2024-10-07 19:00:09.605146 - The script ran 
+2024-10-07 19:04:50.949869 - The script ran 
+2024-10-07 19:05:44.792285 - The script ran 
+2024-10-07 19:06:34.309535 - The script ran 
+2024-10-09 18:00:52.357117 - The script ran 
+2024-10-10 14:00:46.186610 - The script ran 
+2024-10-14 21:45:36.159802 - The script ran 
+2024-10-16 18:00:10.723531 - The script ran 
+2024-10-17 14:00:26.827819 - The script ran 
+2024-10-21 19:00:49.930217 - The script ran 
+2024-10-23 18:00:47.403545 - The script ran not registered
+2024-10-23 19:36:18.241553 - The script ran not registered
+2024-10-28 19:00:56.891827 - The script ran 
+2024-11-04 19:19:30.717984 - The script ran 
+2024-11-07 14:00:43.362418 - The script ran 
+2024-11-11 19:51:34.519280 - The script ran 
+2024-11-14 14:00:54.359432 - The script ran 
+2024-11-18 19:00:28.435796 - The script ran 
+2024-11-20 18:00:42.840454 - The script ran 
+2024-11-21 14:00:46.456137 - The script ran 
+2024-11-25 19:00:36.654282 - The script ran 
+2024-12-02 19:02:31.156915 - The script ran 
+2024-12-05 14:00:28.205497 - The script ran 
+2024-12-09 19:00:51.959586 - The script ran 
+2024-12-12 14:00:51.454806 - The script ran 
+2024-12-17 12:45:59.209474 - The script ran 
+2024-12-23 23:24:20.732979 - The script ran 
+2024-12-30 19:00:16.531732 - The script ran 
+2025-01-02 14:00:14.403323 - The script ran 
+2025-01-06 22:09:01.294644 - The script ran 
+2025-01-13 19:03:10.911970 - The script ran 
+2025-01-20 19:00:39.327420 - The script ran 
+2025-02-03 19:00:29.811576 - The script ran 
+2025-02-24 19:00:34.014108 - The script ran 
+2025-03-03 19:00:32.562432 - The script ran 
+2025-03-13 14:00:18.436237 - The script ran 
+2025-03-17 19:00:13.195071 - The script ran 
+2025-06-25 16:30:55.651167 - The script ran 
+2025-06-25 16:32:26.120901 - The script ran 
+2025-06-25 16:37:35.046488 - The script ran Failure
+2025-06-25 16:43:08.931360 - The script ran Failure
+2025-06-25 16:45:50.681674 - The script ran Failure
+2025-06-25 16:46:44.639750 - The script ran Failure
+2025-06-25 16:49:00.708850 - The script ran Failure
+2025-06-25 16:50:44.393319 - The script ran Waitlisted
+2025-07-02 16:34:17.935845 - The script ran Waitlisted

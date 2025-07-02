@@ -16,10 +16,7 @@ import register_event as register
 load_dotenv()
 # the links will be stored inside a database in order to keep the modifications for the links
 # using sqlite because it is ideal for storing the links locally on my computer
-SATURDAY = "https://cityofsurrey.perfectmind.com/23615/Clients/BookMe4LandingPages/Class?widgetId=b4059e75-9755-401f-a7b5-d7c75361420d&redirectedFromEmbededMode=False&classId=5911ec72-4f62-48c9-8890-13577fd49c24&occurrenceDate=20241005"
-SUNDAY = "https://cityofsurrey.perfectmind.com/23615/Clients/BookMe4LandingPages/Class?widgetId=b4059e75-9755-401f-a7b5-d7c75361420d&redirectedFromEmbededMode=False&classId=7daf67f1-dd8d-420d-bc60-42ff9013a683&occurrenceDate=20241006"
-THURSDAY = "https://cityofsurrey.perfectmind.com/23615/Clients/BookMe4LandingPages/Class?widgetId=b4059e75-9755-401f-a7b5-d7c75361420d&redirectedFromEmbededMode=False&classId=35b4a887-8905-484b-a83f-f66c5cd24261&occurrenceDate=20241003"
-FRIDAY = "https://cityofsurrey.perfectmind.com/23615/Clients/BookMe4LandingPages/Class?widgetId=b4059e75-9755-401f-a7b5-d7c75361420d&redirectedFromEmbededMode=False&classId=0b285251-a3c0-40f9-ba44-594b25c16b95&occurrenceDate=20241004"
+
 temp = ""
 EMAIL = os.getenv("EMAIL")
 PASSWORD = os.getenv("PASSWORD")
@@ -87,6 +84,19 @@ def handle_registration(LINK):
     #e1.completeRegister()
     return e1
 
+# use this for starting the script early and then waiting until the target time
+def wait_until_target_time(wait_until):
+    now = datetime.datetime.now() 
+    target_time = datetime.datetime.strptime(wait_until, "%H:%M").replace(
+        year = now.year, month = now.month, day = now.day
+    )
+    if now > target_time:
+        print("target time has passed")
+        return
+
+    seconds_to_wait = (target_time - now).total_seconds()
+    print(f"waiting for {seconds_to_wait} seconds")
+    time.sleep(seconds_to_wait)
 
 def main():
     if PATH_TO_DB is None:
