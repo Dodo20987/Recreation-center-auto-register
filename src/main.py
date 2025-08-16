@@ -107,12 +107,13 @@ def main():
     q_str = f"SELECT link FROM links WHERE registerDay = '{curr_day}'"
     res = cur.execute(q_str)
     registration_link = res.fetchone()[0]
+    #print(registration_link)
+    #exit(1)
     # print(registration_link)
     registered = None
     response_string = ""
     try:
         reg = handle_registration(registration_link)
-    #            handle_registration("https://cityofsurrey.perfectmind.com/23615/Clients/BookMe4LandingPages/Class?widgetId=b4059e75-9755-401f-a7b5-d7c75361420d&redirectedFromEmbededMode=False&classId=afe19048-8caf-d2ff-7ede-63afb9c2e80c&occurrenceDate=20241026")
         response_string = "Success"
         if(reg.get_wait_list() == True):
             response_string = "Waitlisted"
@@ -126,7 +127,7 @@ def main():
     con.close()
     file = open(str(TEXT_FILE_PATH), "a")
     file.write(
-        f"{datetime.datetime.now()}" + " - The script ran " + response_string + "\n"
+        f"{datetime.datetime.now()}" + " - The script ran " + response_string + "link used: " + registration_link + "\n"
     )
     file.close()
 
